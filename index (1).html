@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Emmanuella Samuel — Energy Data Engineer, AI Builder, and Regulatory Technology Specialist. Co-designer of Nigeria's national electricity tariff model.">
+<meta property="og:title" content="Emmanuella Samuel">
+<meta property="og:description" content="Energy Data Engineer & AI Builder. I shaped Nigeria's national electricity tariff model — now I build the tools that run on it.">
+<meta property="og:type" content="website">
+<title>Emmanuella Samuel</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg:        #080c14;
+  --bg2:       #0e1420;
+  --bg3:       #141b2d;
+  --gold:      #e8a735;
+  --gold-dim:  #c48920;
+  --gold-pale: #f5d48a;
+  --cream:     #f0ead8;
+  --white:     #ffffff;
+  --muted:     #6b7a96;
+  --border:    rgba(255,255,255,0.08);
+  --border2:   rgba(232,167,53,0.25);
+
+  --serif: 'Playfair Display', Georgia, serif;
+  --mono:  'DM Mono', 'Courier New', monospace;
+  --sans:  'DM Sans', system-ui, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── Custom Cursor ── */
+.cursor {
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease, background 0.2s;
+  transform: translate(-50%, -50%);
+}
+.cursor-ring {
+  width: 28px; height: 28px;
+  border: 1px solid rgba(232,167,53,0.5);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.35s ease, width 0.2s, height 0.2s, opacity 0.2s;
+  transform: translate(-50%, -50%);
+}
+body:has(a:hover) .cursor { transform: translate(-50%, -50%) scale(2); background: var(--gold-pale); }
+body:has(a:hover) .cursor-ring { width: 44px; height: 44px; opacity: 0.3; }
+
+/* ── Noise Overlay ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.4;
+}
+
+/* ── Layout ── */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+section { position: relative; z-index: 2; }
+
+/* ── Navigation ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.25rem 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(8,12,20,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  transition: padding 0.3s;
+}
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.nav-links {
+  display: flex; gap: 2rem; list-style: none;
+}
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* ── Hero ── */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 7rem 2rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(232,167,53,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232,167,53,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+}
+
+.hero-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,167,53,0.07) 0%, transparent 70%);
+  top: 50%; left: 60%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  max-width: 1100px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1fr 340px; gap: 4rem; align-items: center;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 32px; height: 1px;
+  background: var(--gold);
+}
+
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(3.2rem, 7vw, 5.8rem);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 0.2rem;
+}
+.hero-name em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-title {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+.hero-bio {
+  font-size: 1.15rem;
+  color: rgba(240,234,216,0.75);
+  line-height: 1.8;
+  max-width: 560px;
+  margin-bottom: 2.5rem;
+}
+.hero-bio strong {
+  color: var(--cream);
+  font-weight: 500;
+}
+
+.hero-stat-bar {
+  display: flex; gap: 2rem; margin-bottom: 2.5rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.hero-stat { text-align: left; }
+.hero-stat-number {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+.hero-stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0.75rem 1.75rem;
+  background: var(--gold);
+  color: var(--bg);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none; cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-primary:hover { background: var(--gold-pale); transform: translateY(-2px); }
+
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0.75rem 1.75rem;
+  background: transparent;
+  color: var(--cream);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, transform 0.15s;
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+/* Hero right column — identity card */
+.hero-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--gold);
+  padding: 2rem;
+  position: relative;
+}
+.hero-card::before {
+  content: 'PROFILE';
+  position: absolute; top: -10px; left: 1.5rem;
+  background: var(--bg2);
+  padding: 0 8px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+}
+
+.profile-avatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--bg);
+  margin-bottom: 1rem;
+}
+
+.profile-name {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+.profile-role {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.profile-items { display: flex; flex-direction: column; gap: 0.75rem; }
+.profile-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px;
+  color: rgba(240,234,216,0.65);
+}
+.profile-item-icon {
+  width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px;
+  color: var(--gold-dim);
+}
+.profile-item strong {
+  display: block;
+  color: var(--cream);
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 1px;
+}
+
+.profile-divider {
+  height: 1px; background: var(--border);
+  margin: 1.25rem 0;
+}
+
+.profile-socials {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.social-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.social-pill:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ── Section Basics ── */
+.section-header {
+  margin-bottom: 3.5rem;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-label::before {
+  content: '';
+  display: inline-block; width: 20px; height: 1px;
+  background: var(--gold);
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.1;
+}
+
+/* ── Achievements ── */
+#achievements { padding: 7rem 2rem; }
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.achievement-card {
+  background: var(--bg);
+  padding: 2rem;
+  transition: background 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.achievement-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: var(--gold);
+  transition: width 0.4s ease;
+}
+.achievement-card:hover { background: var(--bg2); }
+.achievement-card:hover::after { width: 100%; }
+
+.achievement-number {
+  font-family: var(--serif);
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: rgba(232,167,53,0.12);
+  line-height: 1;
+  margin-bottom: 0.75rem;
+  transition: color 0.3s;
+}
+.achievement-card:hover .achievement-number { color: rgba(232,167,53,0.2); }
+
+.achievement-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--cream);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+.achievement-desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.achievement-tag {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 3px 10px;
+  border: 1px solid var(--border2);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+
+/* ── Projects ── */
+#projects { padding: 7rem 2rem; background: var(--bg2); }
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.project-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+  display: flex; flex-direction: column;
+}
+.project-card:hover {
+  border-color: rgba(232,167,53,0.4);
+  transform: translateY(-4px);
+}
+.project-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.project-card.de::before  { background: #4a9eff; }
+.project-card.cld::before { background: #00d4aa; }
+.project-card.sec::before { background: #ff4a6b; }
+.project-card.ai::before  { background: var(--gold); }
+
+.project-code {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.project-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.75rem;
+  line-height: 1;
+}
+.project-title {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+.project-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+  flex: 1;
+}
+.project-impact {
+  font-size: 0.82rem;
+  color: rgba(240,234,216,0.6);
+  border-left: 2px solid var(--gold-dim);
+  padding-left: 0.75rem;
+  font-style: italic;
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+}
+.project-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 1.5rem;
+}
+.tag {
+  padding: 3px 9px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.project-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: gap 0.2s;
+  margin-top: auto;
+}
+.project-link:hover { gap: 10px; }
+.arrow { transition: transform 0.2s; }
+.project-link:hover .arrow { transform: translateX(3px); }
+
+/* ── Skills ── */
+#skills { padding: 7rem 2rem; }
+
+.skills-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+.skills-col-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+
+.skill-bar-item {
+  margin-bottom: 1.25rem;
+}
+.skill-bar-top {
+  display: flex; justify-content: space-between;
+  margin-bottom: 6px;
+}
+.skill-name {
+  font-size: 13px;
+  color: var(--cream);
+  font-weight: 400;
+}
+.skill-level {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+}
+.skill-track {
+  height: 2px;
+  background: var(--border);
+  position: relative;
+}
+.skill-fill {
+  height: 100%;
+  background: var(--gold);
+  width: 0;
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tech-chips {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.chip {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: rgba(240,234,216,0.6);
+  letter-spacing: 0.05em;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  cursor: default;
+}
+.chip:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(232,167,53,0.05);
+}
+
+/* ── Ventures ── */
+#ventures { padding: 7rem 2rem; background: var(--bg2); }
+
+.ventures-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.venture-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 1.75rem;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.venture-card:hover {
+  border-color: rgba(232,167,53,0.3);
+  transform: translateY(-3px);
+}
+.venture-emoji { font-size: 2rem; margin-bottom: 1rem; line-height: 1; }
+.venture-name {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.4rem;
+}
+.venture-tagline {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.venture-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  background: rgba(232,167,53,0.08);
+  border: 1px solid var(--border2);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+}
+
+/* ── Credentials ── */
+#credentials { padding: 7rem 2rem; }
+
+.credentials-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.cred-section-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.cred-item {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;
+}
+.cred-item:last-child { border-bottom: none; }
+.cred-name {
+  font-size: 14px;
+  color: var(--cream);
+  font-weight: 400;
+  line-height: 1.4;
+}
+.cred-issuer {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 3px;
+  letter-spacing: 0.05em;
+}
+.cred-badge {
+  flex-shrink: 0;
+  padding: 3px 9px;
+  background: rgba(232,167,53,0.08);
+  border: 1px solid var(--border2);
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--gold-dim);
+  white-space: nowrap;
+}
+
+.edu-item {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.edu-item:last-child { border-bottom: none; }
+.edu-degree {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--cream);
+  margin-bottom: 3px;
+}
+.edu-school {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--gold-dim);
+  letter-spacing: 0.05em;
+  margin-bottom: 3px;
+}
+.edu-status {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+}
+
+/* ── Contact ── */
+#contact { padding: 7rem 2rem 5rem; }
+
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.contact-headline {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
+}
+.contact-headline em { color: var(--gold); font-style: italic; }
+
+.contact-sub {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.75;
+  margin-bottom: 2rem;
+}
+
+.contact-links { display: flex; flex-direction: column; gap: 1rem; }
+
+.contact-link-item {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.contact-link-item:hover {
+  border-color: var(--gold);
+  background: rgba(232,167,53,0.04);
+}
+.contact-link-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 2px;
+}
+.contact-link-value {
+  font-size: 13px;
+  color: var(--cream);
+}
+
+.contact-availability {
+  padding: 1.5rem;
+  border: 1px solid var(--border2);
+  background: rgba(232,167,53,0.04);
+}
+.avail-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  background: #22c55e;
+  border-radius: 50%;
+  margin-right: 8px;
+  animation: pulse-green 2s ease infinite;
+}
+@keyframes pulse-green {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.avail-text {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--cream);
+  letter-spacing: 0.05em;
+}
+
+/* ── Footer ── */
+footer {
+  padding: 2rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  position: relative; z-index: 2;
+}
+footer p {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+}
+footer span { color: var(--gold); }
+
+/* ── Animations ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .cursor, .cursor-ring { display: none; }
+  body { cursor: auto; }
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+
+  #hero { padding: 6rem 1.25rem 3rem; }
+  .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero-card { order: -1; }
+  .hero-name { font-size: clamp(2.5rem, 10vw, 4rem); }
+  .hero-stat-bar { gap: 1.5rem; }
+
+  .achievements-grid { grid-template-columns: 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .skills-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  .ventures-grid { grid-template-columns: 1fr; }
+  .credentials-layout { grid-template-columns: 1fr; }
+  .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+
+  section { padding-left: 1.25rem; padding-right: 1.25rem; }
+  #achievements, #projects, #skills, #ventures, #credentials, #contact { padding-left: 1.25rem; padding-right: 1.25rem; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ── Navigation ── -->
+<nav>
+  <a href="#hero" class="nav-logo">ES /</a>
+  <ul class="nav-links">
+    <li><a href="#achievements">Impact</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#ventures">Ventures</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner container">
+
+    <div>
+      <div class="hero-eyebrow reveal">Energy · Data · AI · Nigeria</div>
+      <h1 class="hero-name reveal reveal-delay-1">
+        Emmanuella<br><em>Samuel</em>
+      </h1>
+      <p class="hero-title reveal reveal-delay-2">Energy Data Engineer &amp; AI Builder</p>
+      <p class="hero-bio reveal reveal-delay-2">
+        I shaped <strong>Nigeria's national electricity tariff model</strong> —
+        now I build the software that runs on it. From regulatory frameworks at
+        NSERC to AI-powered tools that serve DisCo customers in Pidgin and
+        English, I operate at the intersection of policy and code.
+      </p>
+
+      <div class="hero-stat-bar reveal reveal-delay-3">
+        <div class="hero-stat">
+          <div class="hero-stat-number">7+</div>
+          <div class="hero-stat-label">Years in sector</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-number">11</div>
+          <div class="hero-stat-label">DisCos modelled</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-number">4</div>
+          <div class="hero-stat-label">Live projects</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-number">1</div>
+          <div class="hero-stat-label">National standard</div>
+        </div>
+      </div>
+
+      <div class="hero-ctas reveal reveal-delay-4">
+        <a href="#projects" class="btn-primary">View Projects →</a>
+        <a href="YOUR_CV_LINK_HERE" target="_blank" class="btn-outline">Download CV</a>
+        <a href="#contact" class="btn-outline">Get in Touch</a>
+      </div>
+    </div>
+
+    <!-- Identity Card -->
+    <div class="hero-card reveal reveal-delay-2">
+      <div class="profile-avatar">ES</div>
+      <div class="profile-name">Emmanuella Samuel</div>
+      <div class="profile-role">NSERC · Lagos, Nigeria</div>
+
+      <div class="profile-items">
+        <div class="profile-item">
+          <svg class="profile-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M8 9a3 3 0 100-6 3 3 0 000 6z"/><path d="M2.5 14s0-5.5 5.5-5.5 5.5 5.5 5.5 5.5"/>
+          </svg>
+          <div>
+            <strong>Current Role</strong>
+            Niger State Electricity Regulatory Commission
+          </div>
+        </div>
+        <div class="profile-item">
+          <svg class="profile-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="3" width="12" height="10" rx="1"/><path d="M5 3V2M11 3V2M2 7h12"/>
+          </svg>
+          <div>
+            <strong>Education</strong>
+            MSc Financial Engineering · WorldQuant Univ.
+          </div>
+        </div>
+        <div class="profile-item">
+          <svg class="profile-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 12l2-4 3 3 2-6 3 7"/><rect x="1" y="1" width="14" height="14" rx="1"/>
+          </svg>
+          <div>
+            <strong>Focus Areas</strong>
+            Energy regulation · Data engineering · AI automation
+          </div>
+        </div>
+        <div class="profile-item">
+          <svg class="profile-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/>
+          </svg>
+          <div>
+            <strong>Availability</strong>
+            Open to consulting &amp; senior roles
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-divider"></div>
+
+      <div class="profile-socials">
+        <a href="https://linkedin.com/in/emmanuella-samuel/" target="_blank" class="social-pill">LinkedIn ↗</a>
+        <a href="https://github.com/Kokomma" target="_blank" class="social-pill">GitHub ↗</a>
+        <a href="https://calendar.app.google/uLq7wai48roKu1Sn9" target="_blank" class="social-pill">Book Call ↗</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Achievements ── -->
+<section id="achievements">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-label">Career impact</div>
+        <h2 class="section-title">What I've Shaped</h2>
+      </div>
+    </div>
+
+    <div class="achievements-grid">
+      <div class="achievement-card reveal">
+        <div class="achievement-number">01</div>
+        <div class="achievement-title">Nigeria's National Electricity Tariff Standard</div>
+        <div class="achievement-desc">Co-designed the tariff model for AEDC, later adopted by NERC as the national standard for electricity pricing across all DisCos. A framework now used by the entire industry.</div>
+        <div class="achievement-tag">NERC · National Standard</div>
+      </div>
+
+      <div class="achievement-card reveal reveal-delay-1">
+        <div class="achievement-number">02</div>
+        <div class="achievement-title">Nigeria's Wind Energy Commission</div>
+        <div class="achievement-desc">Contributed to the Wind Energy Policy & Strategy backed by the Global Energy Alliance for People and Planet (GEAPP), supporting the creation of a new national commission.</div>
+        <div class="achievement-tag">GEAPP · Renewable Policy</div>
+      </div>
+
+      <div class="achievement-card reveal reveal-delay-2">
+        <div class="achievement-number">03</div>
+        <div class="achievement-title">Enterprise Performance Dashboards</div>
+        <div class="achievement-desc">Built cross-departmental KPI dashboards across Finance, Operations, and Customer Service at AEDC — directly shaping leadership investment decisions and operational priorities.</div>
+        <div class="achievement-tag">Power BI · Decision Support</div>
+      </div>
+
+      <div class="achievement-card reveal">
+        <div class="achievement-number">04</div>
+        <div class="achievement-title">ATC&amp;C Loss Reduction at AEDC</div>
+        <div class="achievement-desc">Supported major utility transformation projects including ERP rollout, AMI deployment, and customer service reform — contributing to measurable improvement in distribution efficiency.</div>
+        <div class="achievement-tag">Utility Transformation</div>
+      </div>
+
+      <div class="achievement-card reveal reveal-delay-1">
+        <div class="achievement-number">05</div>
+        <div class="achievement-title">Policy &amp; Investment at Nextier Capital</div>
+        <div class="achievement-desc">Delivered policy briefs on renewable energy, climate adaptation, and energy access that guided government agencies and donor organizations on investment decisions.</div>
+        <div class="achievement-tag">Climate · Energy Access</div>
+      </div>
+
+      <div class="achievement-card reveal reveal-delay-2">
+        <div class="achievement-number">06</div>
+        <div class="achievement-title">Data Protection Leadership</div>
+        <div class="achievement-desc">Served as AEDC's Data Protection Representative — embedding compliance and privacy principles into enterprise-wide initiatives across the organisation's strategy arm.</div>
+        <div class="achievement-tag">NDPR · Data Compliance</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Projects ── -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-label">Technical portfolio</div>
+        <h2 class="section-title">What I've Built</h2>
+      </div>
+      <a href="https://github.com/Kokomma" target="_blank" class="btn-outline">All on GitHub ↗</a>
+    </div>
+
+    <div class="projects-grid">
+
+      <div class="project-card de reveal">
+        <div class="project-code">DE-001 · Data Engineering</div>
+        <div class="project-icon">⚡</div>
+        <div class="project-title">Energy Consumption Pipeline</div>
+        <div class="project-desc">End-to-end ETL pipeline for Nigerian DisCo data — ingesting consumption, outage, and renewable energy datasets into a star-schema PostgreSQL warehouse, visualised in Power BI.</div>
+        <div class="project-impact">"Reduced manual data consolidation from 3 days to 15 minutes across all 11 DisCos."</div>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">PostgreSQL</span>
+          <span class="tag">Power BI</span><span class="tag">Azure</span><span class="tag">Pandas</span>
+        </div>
+        <a href="https://github.com/Kokomma/energy-consumption-pipeline" target="_blank" class="project-link">
+          View on GitHub <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <div class="project-card cld reveal reveal-delay-1">
+        <div class="project-code">CLD-001 · Cloud Engineering</div>
+        <div class="project-icon">🔌</div>
+        <div class="project-title">Smart Grid Monitoring System</div>
+        <div class="project-desc">Real-time IoT simulation of 10 Nigerian distribution feeders — transformer telemetry, fault injection, Azure Function alert processing, and live Grafana dashboard with 10-second refresh.</div>
+        <div class="project-impact">"Demonstrates 35% faster fault detection vs manual reporting, aligned to NERC QoS benchmarks."</div>
+        <div class="project-tags">
+          <span class="tag">Azure IoT</span><span class="tag">Python</span>
+          <span class="tag">Grafana</span><span class="tag">Docker</span><span class="tag">Functions</span>
+        </div>
+        <a href="https://github.com/Kokomma/smart-grid-monitoring" target="_blank" class="project-link">
+          View on GitHub <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <div class="project-card sec reveal">
+        <div class="project-code">SEC-001 · Cybersecurity</div>
+        <div class="project-icon">🛡️</div>
+        <div class="project-title">Electricity Infrastructure Threat Dashboard</div>
+        <div class="project-desc">ICS cybersecurity monitoring with simulated SCADA attack logs across 10 attack scenarios — MITRE ATT&CK for ICS tagging, full ELK stack, and 5 automated Kibana detection rules.</div>
+        <div class="project-impact">"Near-zero-competition niche in Nigerian cybersecurity. Maps directly to NERC CIP compliance requirements."</div>
+        <div class="project-tags">
+          <span class="tag">ELK Stack</span><span class="tag">MITRE ATT&CK</span>
+          <span class="tag">Python</span><span class="tag">Docker</span><span class="tag">SIEM</span>
+        </div>
+        <a href="https://github.com/Kokomma/electricity-threat-dashboard" target="_blank" class="project-link">
+          View on GitHub <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <div class="project-card ai reveal reveal-delay-1">
+        <div class="project-code">AI-001 · AI Automation</div>
+        <div class="project-icon">🤖</div>
+        <div class="project-title">AI Customer Complaint Agent for DisCos</div>
+        <div class="project-desc">WhatsApp bot that classifies Nigerian DisCo customer complaints using Claude AI — understands English and Pidgin, generates empathetic responses, logs structured tickets to Supabase with SLA tracking.</div>
+        <div class="project-impact">"Reduces complaint response time from 72 hours to 60 seconds. Pitchable to all 11 DisCos as a licensed SaaS product."</div>
+        <div class="project-tags">
+          <span class="tag">FastAPI</span><span class="tag">Claude API</span>
+          <span class="tag">Twilio</span><span class="tag">Supabase</span><span class="tag">WhatsApp</span>
+        </div>
+        <a href="https://github.com/Kokomma/disco-ai-complaint-agent" target="_blank" class="project-link">
+          View on GitHub <span class="arrow">→</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Skills ── -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-label">Capabilities</div>
+        <h2 class="section-title">Skills &amp; Stack</h2>
+      </div>
+    </div>
+
+    <div class="skills-layout">
+      <div>
+        <div class="skills-col-title">Core proficiencies</div>
+
+        <div class="skill-bar-item reveal">
+          <div class="skill-bar-top">
+            <span class="skill-name">Energy Regulation &amp; Policy</span>
+            <span class="skill-level">Expert</span>
+          </div>
+          <div class="skill-track"><div class="skill-fill" data-width="95"></div></div>
+        </div>
+
+        <div class="skill-bar-item reveal reveal-delay-1">
+          <div class="skill-bar-top">
+            <span class="skill-name">Data Engineering &amp; ETL</span>
+            <span class="skill-level">Advanced</span>
+          </div>
+          <div class="skill-track"><div class="skill-fill" data-width="88"></div></div>
+        </div>
+
+        <div class="skill-bar-item reveal reveal-delay-2">
+          <div class="skill-bar-top">
+            <span class="skill-name">Financial Modelling</span>
+            <span class="skill-level">Advanced</span>
+          </div>
+          <div class="skill-track"><div class="skill-fill" data-width="90"></div></div>
+        </div>
+
+        <div class="skill-bar-item reveal reveal-delay-1">
+          <div class="skill-bar-top">
+            <span class="skill-name">Power BI &amp; Data Visualisation</span>
+            <span class="skill-level">Advanced</span>
+          </div>
+          <div class="skill-track"><div class="skill-fill" data-width="85"></div></div>
+        </div>
+
+        <div class="skill-bar-item reveal reveal-delay-2">
+          <div class="skill-bar-top">
+            <span class="skill-name">AI &amp; LLM Integration</span>
+            <span class="skill-level">Proficient</span>
+          </div>
+          <div class="skill-track"><div class="skill-fill" data-width="78"></div></div>
+        </div>
+
+        <div class="skill-bar-item reveal reveal-delay-3">
+          <div class="skill-bar-top">
+            <span class="skill-name">Cloud Architecture (Azure)</span>
+            <span class="skill-level">Proficient</span>
+          </div>
+          <div class="skill-track"><div class="skill-fill" data-width="72"></div></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="skills-col-title">Tech stack</div>
+        <div class="tech-chips reveal">
+          <span class="chip">Python</span>
+          <span class="chip">SQL</span>
+          <span class="chip">PostgreSQL</span>
+          <span class="chip">Azure</span>
+          <span class="chip">Power BI</span>
+          <span class="chip">FastAPI</span>
+          <span class="chip">Supabase</span>
+          <span class="chip">Claude API</span>
+          <span class="chip">Docker</span>
+          <span class="chip">Grafana</span>
+          <span class="chip">ELK Stack</span>
+          <span class="chip">Pandas</span>
+          <span class="chip">SQLAlchemy</span>
+          <span class="chip">Twilio</span>
+          <span class="chip">Git / GitHub</span>
+          <span class="chip">Excel</span>
+          <span class="chip">Tableau</span>
+          <span class="chip">n8n</span>
+        </div>
+
+        <div style="margin-top: 2.5rem;">
+          <div class="skills-col-title">Domain expertise</div>
+          <div class="tech-chips reveal reveal-delay-1">
+            <span class="chip">NERC / NSERC Regulation</span>
+            <span class="chip">DisCo Tariff Frameworks</span>
+            <span class="chip">WACC / CAPM / RAB</span>
+            <span class="chip">ATC&amp;C Loss Analysis</span>
+            <span class="chip">SAIDI / SAIFI</span>
+            <span class="chip">ICS / SCADA</span>
+            <span class="chip">MITRE ATT&amp;CK</span>
+            <span class="chip">Renewable Energy</span>
+            <span class="chip">Climate Finance</span>
+            <span class="chip">NDPR Compliance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Ventures ── -->
+<section id="ventures">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-label">Innovation in action</div>
+        <h2 class="section-title">Products I'm Building</h2>
+      </div>
+    </div>
+
+    <div class="ventures-grid">
+      <div class="venture-card reveal">
+        <div class="venture-emoji">📣</div>
+        <div class="venture-name">Clyqa</div>
+        <div class="venture-tagline">Performance-based creator marketing platform for African markets — connecting brands with creators through data-driven campaign management and Paystack escrow.</div>
+        <div class="venture-badge">Founder · Active</div>
+      </div>
+
+      <div class="venture-card reveal reveal-delay-1">
+        <div class="venture-emoji">🛍️</div>
+        <div class="venture-name">Trynd</div>
+        <div class="venture-tagline">AI-powered modest fashion try-on tool reducing returns and waste — helping shoppers visualise how garments look before they buy.</div>
+        <div class="venture-badge">Co-Founder · Building</div>
+      </div>
+
+      <div class="venture-card reveal reveal-delay-2">
+        <div class="venture-emoji">🧓</div>
+        <div class="venture-name">Tavvi</div>
+        <div class="venture-tagline">Voice AI tool for decluttering and scam prevention designed for seniors — making technology accessible and safe for older adults navigating digital life.</div>
+        <div class="venture-badge">Co-Founder · Building</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Credentials ── -->
+<section id="credentials">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-label">Qualifications</div>
+        <h2 class="section-title">Education &amp; Certifications</h2>
+      </div>
+    </div>
+
+    <div class="credentials-layout">
+      <div>
+        <div class="cred-section-title">Education</div>
+
+        <div class="edu-item reveal">
+          <div class="edu-degree">MSc Financial Engineering</div>
+          <div class="edu-school">WorldQuant University</div>
+          <div class="edu-status">In Progress · 2024–Present</div>
+        </div>
+
+        <div class="edu-item reveal reveal-delay-1">
+          <div class="edu-degree">BSc Economics</div>
+          <div class="edu-school">Akwa Ibom State University</div>
+          <div class="edu-status">Completed</div>
+        </div>
+
+        <div class="edu-item reveal reveal-delay-2">
+          <div class="edu-degree">Data Science Lab</div>
+          <div class="edu-school">WorldQuant University</div>
+          <div class="edu-status">Completed</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="cred-section-title">Certifications</div>
+
+        <div class="cred-item reveal">
+          <div>
+            <div class="cred-name">Financial Modelling &amp; Valuation Analyst</div>
+            <div class="cred-issuer">CFI · FMVA</div>
+          </div>
+          <div class="cred-badge">Finance</div>
+        </div>
+
+        <div class="cred-item reveal reveal-delay-1">
+          <div>
+            <div class="cred-name">Business Intelligence &amp; Data Analyst</div>
+            <div class="cred-issuer">CFI · BIDA</div>
+          </div>
+          <div class="cred-badge">Data</div>
+        </div>
+
+        <div class="cred-item reveal reveal-delay-1">
+          <div>
+            <div class="cred-name">Certified Data Analyst</div>
+            <div class="cred-issuer">Professional certification</div>
+          </div>
+          <div class="cred-badge">Data</div>
+        </div>
+
+        <div class="cred-item reveal reveal-delay-2">
+          <div>
+            <div class="cred-name">Certified Project Manager</div>
+            <div class="cred-issuer">Professional certification</div>
+          </div>
+          <div class="cred-badge">Management</div>
+        </div>
+
+        <div class="cred-item reveal reveal-delay-2">
+          <div>
+            <div class="cred-name">Scrum Master</div>
+            <div class="cred-issuer">Professional certification</div>
+          </div>
+          <div class="cred-badge">Agile</div>
+        </div>
+
+        <div class="cred-item reveal reveal-delay-3">
+          <div>
+            <div class="cred-name">No-Code AI Builds</div>
+            <div class="cred-issuer">Google Developers Program</div>
+          </div>
+          <div class="cred-badge">AI</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="reveal">
+        <div class="section-label" style="margin-bottom: 1rem;">Get in touch</div>
+        <h2 class="contact-headline">Let's build something <em>great.</em></h2>
+        <p class="contact-sub">
+          Looking for someone who bridges regulatory depth and technical execution in Nigeria's energy sector? I'm open to senior roles, consulting engagements, and partnerships.
+        </p>
+        <div style="margin-bottom: 1.5rem;">
+          <span class="avail-dot"></span>
+          <span class="avail-text">Available for consulting and new opportunities</span>
+        </div>
+        <div class="hero-ctas">
+          <a href="https://calendar.app.google/uLq7wai48roKu1Sn9" target="_blank" class="btn-primary">Book a Call →</a>
+          <a href="YOUR_CV_LINK_HERE" target="_blank" class="btn-outline">Download CV</a>
+        </div>
+      </div>
+
+      <div class="contact-links reveal reveal-delay-1">
+        <a href="https://linkedin.com/in/emmanuella-samuel/" target="_blank" class="contact-link-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--gold); flex-shrink:0;">
+            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+          </svg>
+          <div>
+            <span class="contact-link-label">LinkedIn</span>
+            <span class="contact-link-value">Emmanuella Samuel</span>
+          </div>
+        </a>
+
+        <a href="https://github.com/Kokomma" target="_blank" class="contact-link-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--gold); flex-shrink:0;">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/>
+          </svg>
+          <div>
+            <span class="contact-link-label">GitHub</span>
+            <span class="contact-link-value">github.com/Kokomma</span>
+          </div>
+        </a>
+
+        <a href="mailto:your@email.com" class="contact-link-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--gold); flex-shrink:0;">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+          </svg>
+          <div>
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-value">your@email.com</span>
+          </div>
+        </a>
+
+        <a href="https://calendar.app.google/uLq7wai48roKu1Sn9" target="_blank" class="contact-link-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--gold); flex-shrink:0;">
+            <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+          </svg>
+          <div>
+            <span class="contact-link-label">Calendly</span>
+            <span class="contact-link-value">Schedule a 30-min call</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <p>© 2025 <span>Emmanuella Samuel</span> · Energy Data Engineer &amp; AI Builder · Lagos, Nigeria</p>
+</footer>
+
+<script>
+/* ── Custom Cursor ── */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px';
+  cursor.style.top  = mouseY + 'px';
+});
+
+function animateRing() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  ring.style.left = ringX + 'px';
+  ring.style.top  = ringY + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+/* ── Scroll Reveal ── */
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+reveals.forEach(el => observer.observe(el));
+
+/* ── Skill Bar Animations ── */
+const skillObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const fills = entry.target.querySelectorAll('.skill-fill');
+      fills.forEach(fill => {
+        const w = fill.getAttribute('data-width');
+        setTimeout(() => { fill.style.width = w + '%'; }, 300);
+      });
+      skillObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+const skillsSection = document.getElementById('skills');
+if (skillsSection) skillObserver.observe(skillsSection);
+
+/* ── Hero entrance ── */
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    document.querySelectorAll('#hero .reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 120);
+    });
+  }, 100);
+});
+
+/* ── Nav shrink on scroll ── */
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 80) {
+    nav.style.padding = '0.85rem 2rem';
+  } else {
+    nav.style.padding = '1.25rem 2rem';
+  }
+});
+</script>
+
+</body>
+</html>
